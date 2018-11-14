@@ -15,6 +15,6 @@ class Endereco(models.Model):
         verbose_name_plural = 'Endereços'
 
     def __str__(self):
-        return self.linha1 + ' ' + self.linha2
+        return self.linha1
     
     

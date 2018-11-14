@@ -11,9 +11,9 @@ class PontoTuristico(models.Model):
     nome = models.CharField(max_length=150)
     descricao = models.TextField()
     aprovado = models.BooleanField(default=False)
-    atracoes = models.ManyToManyField(Atracao)
-    comentarios = models.ManyToManyField(Comentario)
-    avaliacoes = models.ManyToManyField(Avaliacao)
+    atracoes = models.ManyToManyField(Atracao, blank=True)
+    comentarios = models.ManyToManyField(Comentario, blank=True)
+    avaliacoes = models.ManyToManyField(Avaliacao, blank=True)
     endereco = models.ForeignKey(Endereco, on_delete=models.CASCADE, 
         null=True, blank=True)
 

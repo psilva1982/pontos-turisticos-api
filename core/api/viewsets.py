@@ -7,5 +7,8 @@ from core.models import PontoTuristico
 # ViewSets define the view behavior.
 class PontoTuristicoViewSet(viewsets.ModelViewSet):
     
-    queryset = PontoTuristico.objects.all()
-    serializer_class = PontoTuristicoSerializer
+   serializer_class = PontoTuristicoSerializer
+
+   def get_queryset(self):
+      
+      return  PontoTuristico.objects.filter(aprovado=True)

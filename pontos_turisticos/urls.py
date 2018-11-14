@@ -17,18 +17,24 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.urls import path, include
 from rest_framework import routers, serializers, viewsets
+from django.conf import settings
+from django.conf.urls.static import static
 
 from core.api.viewsets import PontoTuristicoViewSet
 from atracoes.api.viewsets import AtracaoViewSet
 from localizacoes.api.viewsets import LocalizacaoViewSet
+from comentarios.api.viewsets import ComentarioViewSet
+from avaliacoes.api.viewsets import AvaliacaoViewSet
 
 router = routers.DefaultRouter()
-router.register(r'pontoturistico', PontoTuristicoViewSet)
-router.register(r'atracao', AtracaoViewSet)
-router.register(r'endereco', LocalizacaoViewSet)
+router.register(r'pontosturisticos', PontoTuristicoViewSet, base_name='PontoTuristico')
+router.register(r'atracoes', AtracaoViewSet)
+router.register(r'enderecos', LocalizacaoViewSet)
+router.register(r'comentarios', ComentarioViewSet)
+router.register(r'avaliacoes', AvaliacaoViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('jet/', include('jet.urls', 'jet')), 
+   # path('jet/', include('jet.urls', 'jet')), 
     path('admin/', admin.site.urls),
-]
+] + static (settings.STATIC_URL, document_root=settings.STATIC_ROOT)
