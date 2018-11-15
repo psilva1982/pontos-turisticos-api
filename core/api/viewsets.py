@@ -8,12 +8,28 @@ from core.models import PontoTuristico
 # ViewSets define the view behavior.
 class PontoTuristicoViewSet(viewsets.ModelViewSet):
 
-   queryset = PontoTuristico.objects.all() 
    serializer_class = PontoTuristicoSerializer
 
-   #def get_queryset(self):
-   #   
-   #   return  PontoTuristico.objects.filter(aprovado=True)
+   def get_queryset(self):
+
+      # Filtrando por querystring
+      # ao invés de utilizar query_params['id'] que lançará exceção caso o parametro não seja passado
+      id = self.request.query_params.get('id', None) 
+      nome = self.request.query_params.get('nome', None)
+      descricao = self.request.query_params.get('descricao', None)
+      
+      queryset = PontoTuristico.objects.all()
+
+      if id:
+       queryset = queryset.filter(pk=id)
+      
+      if nome:
+         queryset = queryset.filter(nome__icontains=nome)
+      
+      if descricao:
+         queryset = queryset.filter(descricao=descricao)
+
+      return queryset
    
    # Sobrescrevendo o método list = GET em pontosturisticos/
    def list(self, request, *args, **kwargs):
