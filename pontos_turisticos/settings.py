@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'rest_framework',
+    'django_filters',
     
     'core',
     'atracoes',
@@ -134,3 +135,7 @@ STATIC_ROOT = 'static'
 
 MEDIA_ROOT = 'imagens'
 MEDIA_URL = '/imagens/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+}
