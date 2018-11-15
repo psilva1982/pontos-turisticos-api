@@ -35,6 +35,5 @@ router.register(r'avaliacoes', AvaliacaoViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-   # path('jet/', include('jet.urls', 'jet')), 
     path('admin/', admin.site.urls),
-] + static (settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static (settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
