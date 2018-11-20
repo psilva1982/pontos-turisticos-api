@@ -1,6 +1,8 @@
 from rest_framework import request, viewsets
-from rest_framework.decorators import action
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import action, permission_classes
 from rest_framework.filters import SearchFilter
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
 from core.api.serializers import PontoTuristicoSerializer
 from core.models import PontoTuristico
@@ -9,9 +11,21 @@ from core.models import PontoTuristico
 # ViewSets define the view behavior.
 class PontoTuristicoViewSet(viewsets.ModelViewSet):
 
+   authentication_classes = (TokenAuthentication, )
+   #permission_classes = (IsAuthenticated,) # Necessário apenas que esteja autenticado
+   permission_classes = (IsAdminUser,) # Apenas se for admin
+
+
+   '''
+   IsAuthenticatedOrReadOnly - Ou autenticado ou dará apenas acesso como leitura 
+   DjangoModelPermissions - Baseada no mecanismo de permissões do Django 
+      
+   '''
+
    serializer_class = PontoTuristicoSerializer
    filter_backends = (SearchFilter,)
    search_fields = ('nome','descricao', 'endereco__linha1')
+
 
    def get_queryset(self):
 
