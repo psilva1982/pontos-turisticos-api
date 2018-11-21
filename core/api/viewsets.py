@@ -4,6 +4,7 @@ from rest_framework.decorators import action, permission_classes
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
+import atracoes
 from core.api.serializers import PontoTuristicoSerializer
 from core.models import PontoTuristico
 
@@ -89,3 +90,18 @@ class PontoTuristicoViewSet(viewsets.ModelViewSet):
    @action(methods=['get'], detail=False)
    def todoendpoint(self, request):
       pass
+
+   # Utilizanda para associar um novo ponto turistico 
+   # a uma atração já existente
+   @action(methods=['post'], detail=True)
+   def associa_atracoes(self, request, id):
+      atracoes = request.data['ids']
+      
+      ponto = PontoTuristico.objects.get(id=id)
+
+      ponto.atracoes.set(atracoes)
+      ponto.save()
+
+      return ponto
+
+      
